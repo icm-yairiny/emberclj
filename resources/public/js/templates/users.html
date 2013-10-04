@@ -3,6 +3,11 @@
 	<li>
 		{{id}} - 
 		{{username}}
+		<ul>
+			{{#each accounts}}
+				<li>{{name}}</li>
+			{{/each}}
+		</ul>	
 	</li>
 	{{/each}}
 </ul>
