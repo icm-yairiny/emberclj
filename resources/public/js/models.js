@@ -6,11 +6,7 @@ define(['application'], function() {
 	var attr = DS.attr;
 
 	App.User = DS.Model.extend({
-		firstName: attr(),
-		lastName: attr(),
-		middleNames: attr(),
-		email: attr(),
-		userType: attr()
+		username: attr()
 	});
 
 });
