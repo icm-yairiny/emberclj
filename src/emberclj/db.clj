@@ -17,16 +17,3 @@
   (postgres {:db "ember-training"
              :user "training"
              :password "training" :naming pg-naming :delimiters ""}))
-
-(declare accounts)
-(declare transactions)
-
-(defentity users
-  (has-many accounts {:fk :user-id}))
-
-(defentity accounts
-  (belongs-to users {:fk :user-id})
-  (has-many transactions {:fk :account-id}))
-
-(defentity transactions
-  (belongs-to accounts {:fk :account-id}))

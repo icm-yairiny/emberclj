@@ -40,7 +40,6 @@
   (fn [req]
     (let [response (app req)
           response (update-in response [:body] u/make-emberable)]
-      (println "*" response)
       response)))
 
 (defn- check-session-handler
