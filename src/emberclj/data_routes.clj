@@ -20,6 +20,9 @@
 (defroutes data-routes
   (em/generate-routes models-definition))
 
+(defn modelsjs []
+  (em/generate-modelsjs models-definition))
+
 (defn- test-all []
   (data-routes {:uri "/users" :request-method :get}))
 

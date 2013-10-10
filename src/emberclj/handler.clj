@@ -53,6 +53,8 @@
 (defroutes app-routes
 
   (GET "/" [] (resp/redirect "/index.html"))
+
+  (GET "/js/models.js" [] (resp/response (dr/modelsjs)))
   
   (context "/data" []
            (-> dr/data-routes

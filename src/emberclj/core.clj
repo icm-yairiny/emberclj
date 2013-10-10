@@ -3,19 +3,10 @@
             [compojure.core :as c]
             [emberclj.utils :as u]
             [emberclj.route-gen :as rg]
-            [ring.util.response :as resp])
+            [emberclj.modelsjs-gen :as mjg]
+            [ring.util.response :as resp]
+            [clostache.parser :as clp])
   (:use [clojure.pprint :only [pprint]]))
-
-(defn clean [] (map #(ns-unmap *ns* %) (keys (ns-interns *ns*))))
-(clean)
-
-(def models-definition
-  {:user
-   {:attributes [:name :password]
-    :children [:account]}
-   :account
-   {:attributes [:name]
-    :parents [:user]}})
 
 (defmacro declare-entities
   "takes a collection of symbols and generates declare clauses"
@@ -51,10 +42,13 @@
         keys# (keys models)
         syms# (map (comp symbol name) keys#)
         syms-plural# (map (comp symbol name #(u/pluralise models %)) keys#)]
-    `(do     
+    `(do
        (declare-entities ~syms-plural#)
        (do ~@(map (fn [sym#] `(define-entity ~sym# ~models)) syms#)))))
 
 (defn generate-routes [models]
   (let [nms (map name (keys models))]
-    (apply c/routes (map #(rg/generate-all-routes models %) nms))))
+    (apply c/routes (doall (map #(rg/generate-all-routes models %) nms)))))
+
+(defn generate-modelsjs [models]
+  (mjg/generate-content models))
